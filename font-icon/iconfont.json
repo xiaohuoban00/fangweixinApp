@@ -1,0 +1,30 @@
+{
+  "id": "1879872",
+  "name": "fangweixin",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9642967",
+      "name": "指南针",
+      "font_class": "zhinanzhen",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "986191",
+      "name": "朋友圈",
+      "font_class": "pengyouquan-copy",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "6366912",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    }
+  ]
+}

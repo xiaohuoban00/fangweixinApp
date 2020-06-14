@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/header.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav title">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<a id="finish" class="mui-icon mui-icon-right-nav mui-pull-right" style="color: white;font-size: 14px;line-height: 25px;">完成</a>
+			<h1 class="mui-title title-color">设置昵称</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-input-row">
+				<input id="nickname" type="text" class="mui-input-speech mui-input-clear" placeholder="修改昵称">
+			</div>
+			
+		</div>
+		
+		<script src="js/mui.js"></script>
+		<script src="js/app.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function () {
+				var userInfo = app.getUserGlobalInfo();
+				var nickname = document.getElementById("nickname");
+				var finish = document.getElementById("finish");
+				nickname.value = userInfo.nickname;
+				finish.addEventListener("tap",function(){
+					console.log(nickname.value)
+					mui.ajax(app.serverUrl+"/user/update",{
+						data:{
+							nickname:nickname.value,
+							userId:userInfo.id
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						headers:{'Content-Type':'application/json'},
+						success:function(data){
+							if(data.status == 200){
+								app.setUserGlobalInfo(data.data);
+								// 触发另外一个webview的自定义事件，可以使用 mui.fire()
+								var meWebview = plus.webview.getWebviewById("me.html");
+								mui.fire(meWebview, "refresh");
+								app.showToast("修改成功","success");
+								mui.back();
+							}else{
+								app.showToast(data.msg,"error");
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>
